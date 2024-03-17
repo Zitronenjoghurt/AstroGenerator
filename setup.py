@@ -13,6 +13,9 @@ setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     author="Zitronenjoghurt",
+    install_requires=[
+        'Pint==0.23'
+    ],
     extras_require={'dev': ['pytest', 'twine', 'wheel']},
     url="https://github.com/Zitronenjoghurt/AstroGenerator"
 )
