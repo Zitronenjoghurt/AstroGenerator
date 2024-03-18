@@ -1,2 +1,2 @@
-from planet import Planet
-from star import Star
+from .planet import Planet
+from .star import Star

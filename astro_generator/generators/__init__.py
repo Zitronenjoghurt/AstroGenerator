@@ -1,1 +1,1 @@
-from regular_generator import RegularGenerator
+from .regular_generator import RegularGenerator
