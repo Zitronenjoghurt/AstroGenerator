@@ -2,7 +2,7 @@ from typing import Any
 from pint import Quantity, Unit
 from astro_generator.exceptions import InvalidUnitError
 
-def validate_unit(quantity: Quantity, unit: Unit, value_name: str, hint_unit: str) -> None:
+def validate_unit(quantity: Quantity, unit, value_name: str, hint_unit: str) -> None:
     if not isinstance(unit, Unit):
         raise InvalidUnitError(expected_dimensionality="None", received_dimensionality="None", value_name=value_name, hint_unit=hint_unit)
     if not isinstance(quantity, Quantity):
