@@ -1,1 +1,1 @@
-from .regular_generator import RegularGenerator
+from .solar_system_generator import SolarSystemGenerator
