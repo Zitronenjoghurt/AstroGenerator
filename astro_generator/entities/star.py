@@ -7,10 +7,11 @@ class Star():
     def __init__(
         self,
         spectral_class: SpectralClass,
-        #luminosity: Quantity,
+        luminosity: Quantity,
         mass: Quantity,
+        lifespan: Quantity,
+        age: Quantity,
         #radius: Quantity,
-        #age: Quantity,
         #rotation_speed: Quantity,
         #metallicity: Quantity
     ) -> None:
@@ -20,8 +21,9 @@ class Star():
             spectral_class (SpectralClass): A short code summarizing the ionization state
             luminosity (Quantity): Total amount of electromagnetic energy emitted per unit of time
             mass (Quantity): Total mass
-            radius (Quantity): Average radius
+            lifespan (Quantity): The lifespan of the star
             age (Quantity): How old the star is
+            radius (Quantity): Average radius
             rotation_speed (Quantity): How fast the star is spinning arount its rotational axis
             metallicity (Quantity): Abundance of elements heavier than hydrogen and helium inside the star
 
@@ -30,19 +32,21 @@ class Star():
         """
         try:
             validate_of_type(spectral_class, SpectralClass, "spectral_class")
-            #validate_unit(luminosity, SOLAR_LUMINOSITY, "luminosity", "SOLAR_LUMINOSITY")
+            validate_unit(luminosity, SOLAR_LUMINOSITY, "luminosity", "SOLAR_LUMINOSITY")
             validate_unit(mass, SOLAR_MASS, "mass", "SOLAR_MASS")
+            validate_unit(lifespan, UNIT_REGISTRY.year, "lifespan", "UNIT_REGISTRY.year")
+            validate_unit(age, UNIT_REGISTRY.year, "age", "UNIT_REGISTRY.year")
             #validate_unit(radius, SOLAR_RADIUS, "radius", "SOLAR_RADIUS")
-            #validate_unit(age, UNIT_REGISTRY.year, "age", "UNIT_REGISTRY.year")
             #validate_unit(rotation_speed, KM_PER_SEC, "rotation_speed", "KM_PER_SEC")
             #validate_unit(metallicity, METALLICITY, "metallicity", "METALLICITY")
         except Exception as e:
             raise ValueError(f"An error occured while initializing star: {e}")
         
         self.spectral_class = spectral_class
-        #self.luminosity = luminosity
+        self.luminosity = luminosity
         self.mass = mass
+        self.lifespan = lifespan
+        self.age = age
         #self.radius = radius
-        #self.age = age
         #self.rotation_speed = rotation_speed
         #self.metallicity = metallicity

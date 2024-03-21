@@ -2,3 +2,6 @@ import astro_generator.configuration.spectral_classes.spectral_m_config as MConf
 import astro_generator.configuration.spectral_classes.spectral_k_config as KConfig
 import astro_generator.configuration.spectral_classes.spectral_g_config as GConfig
 import astro_generator.configuration.spectral_classes.spectral_f_config as FConfig
+import astro_generator.configuration.spectral_classes.spectral_a_config as AConfig
+import astro_generator.configuration.spectral_classes.spectral_b_config as BConfig
+import astro_generator.configuration.spectral_classes.spectral_o_config as OConfig

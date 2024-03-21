@@ -1,4 +1,4 @@
-from astro_generator.configuration.spectral_classes import MConfig, KConfig, GConfig, FConfig
+from astro_generator.configuration.spectral_classes import MConfig, KConfig, GConfig, FConfig, AConfig, BConfig, OConfig
 from astro_generator.constants.spectral_classes import SpectralClass
 from astro_generator.utils.probability import Probability, ProbabilityGroup
 
@@ -23,6 +23,9 @@ DEFAULT_MASS_PROBABILITY = ProbabilityGroup(
         "M": MConfig.DEFAULT_MASS_PROBABILITY,
         "K": KConfig.DEFAULT_MASS_PROBABILITY,
         "G": GConfig.DEFAULT_MASS_PROBABILITY,
-        "F": FConfig.DEFAULT_MASS_PROBABILITY
+        "F": FConfig.DEFAULT_MASS_PROBABILITY,
+        "A": AConfig.DEFAULT_MASS_PROBABILITY,
+        "B": BConfig.DEFAULT_MASS_PROBABILITY,
+        "O": OConfig.DEFAULT_MASS_PROBABILITY
     }
 )
