@@ -1,0 +1,4 @@
+import astro_generator.configuration.spectral_classes.spectral_m_config as MConfig
+import astro_generator.configuration.spectral_classes.spectral_k_config as KConfig
+import astro_generator.configuration.spectral_classes.spectral_g_config as GConfig
+import astro_generator.configuration.spectral_classes.spectral_f_config as FConfig

@@ -1,6 +1,7 @@
 import numpy as np
+import random
 from typing import Any
-from astro_generator.utils.validator import validate_list_type, validate_of_type
+from astro_generator.utils.validator import validate_list_type, validate_of_type, validate_of_types
 
 class RandomSelector():
     def select(self) -> Any:
@@ -22,7 +23,7 @@ class WeightedSelector(RandomSelector):
         Args:
             weights (list): All weights for the given values.
             values (list): Values the selector will choose from.
-            select_count (int): The amount of values that are supposed to be per select().
+            select_count (int): The amount of values that are supposed to be generated per select().
 
         Raises:
             ValueError: On invalid input.
@@ -47,14 +48,14 @@ class WeightedSelector(RandomSelector):
 
         Args:
             data (dict): Dictionary the selector is to be created from. 
-                         Example: {"weights": [10, 50], "values": [1, 2], "select_count": 1}
+                         Example: {"weights": [10, 50], "values": [1, 2], "count": 1}
 
         Returns:
             WeightedSelector: A WeightedSelector instance
         """
         weights = data.get("weights", None)
         values = data.get("values", None)
-        select_count = data.get("select_count", 1)
+        select_count = data.get("count", 1)
 
         return WeightedSelector(weights=weights, values=values, select_count=select_count)
 
@@ -78,7 +79,80 @@ class WeightedSelector(RandomSelector):
         return self.values
     
     def get_value_count(self) -> int:
-        """Will return the amount of values the selector returns.
+        """Will return the amount of values the selector generates.
+
+        Returns:
+            int: Amount of values the selector returns on select().
+        """
+        return self.select_count
+    
+class MinMaxSelector(RandomSelector):
+    def __init__(self, minimum: float|int, maximum: float|int, select_count: int) -> None:
+        """
+        Will select float values between two given numbers.
+
+        Args:
+            minimum (float): The minimum generated value.
+            maximum (float): The maximum generated value.
+            select_count (int): The amount of values that are supposed to be generated per select().
+
+        Raises:
+            ValueError: On invalid input.
+        """
+        validate_of_types(minimum, [float, int], "minimum")
+        validate_of_types(maximum, [float, int], "maximum")
+        validate_of_type(select_count, int, "select_count")
+
+        if minimum > maximum:
+            raise ValueError("The maximum has to be greater than the minimum.")
+        
+        if isinstance(minimum, int) and isinstance(maximum, int):
+            self.mode = "int"
+        else:
+            self.mode = "float"
+        self.minimum = minimum
+        self.maximum = maximum
+        self.select_count = select_count
+
+    @staticmethod
+    def from_dict(data: dict) -> 'MinMaxSelector':
+        """Will create a MinMaxSelector instance from a dictionary
+
+        Args:
+            data (dict): Dictionary the selector is to be created from. 
+                         Example: {"min": 1, "max": 3, "count": 1}
+
+        Returns:
+            MinMaxSelector: A MinMaxSelector instance
+        """
+        minimum = data.get("min", None)
+        maximum = data.get("max", None)
+        select_count = data.get("count", 1)
+
+        return MinMaxSelector(minimum=minimum, maximum=maximum, select_count=select_count)
+
+    def select(self) -> float:
+        """Will select a random value between the specified min and max.
+
+        Returns:
+            float: The random generated value
+        """
+        if self.mode == "float":
+            value = random.uniform(self.minimum, self.maximum)
+        else:
+            value = random.randint(self.minimum, self.maximum) # type: ignore
+        return value
+    
+    def get_values(self) -> list:
+        """Will return all values this selector can generate.
+
+        Returns:
+            list: A list of all possible values.
+        """
+        return [self.minimum, self.maximum]
+    
+    def get_value_count(self) -> int:
+        """Will return the amount of values the selector generates.
 
         Returns:
             int: Amount of values the selector returns on select().
@@ -118,6 +192,8 @@ class Probability():
             if isinstance(data, dict):
                 if "weights" in data and "values" in data:
                     selector = WeightedSelector.from_dict(data=data)
+                elif "min" in data and "max" in data:
+                    selector = MinMaxSelector.from_dict(data=data)
         except Exception as e:
             raise ValueError(f"An error occured while creating Probability: {e}")
         if not isinstance(selector, RandomSelector):
@@ -170,17 +246,17 @@ class ProbabilityGroup():
         except Exception as e:
             raise ValueError(f"An error occured while creating ProbabilityGroup: {e}")
         
-    def generate(self, key: str) -> Any:
+    def generate(self, key: str, default: Any = None) -> Any:
         """Generates a random value according to the random selector the Probability of the given key was created for.
 
         Args:
             key (str): The key of the Probability object that is supposed to be used for generation.
 
         Returns:
-            Any: A random generated value from the given key. Defaults to None if key does not exist.
+            Any: A random generated value from the given key.
         """
         if key not in self.probabilities:
-            return None
+            return default
         probability: Probability = self.probabilities.get(key) # type: ignore
         return probability.generate()
     
