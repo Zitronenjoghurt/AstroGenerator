@@ -1,6 +1,6 @@
 from typing import Optional
 from astro_generator.constants.spectral_classes import SpectralClass
-from astro_generator.data import DEFAULT_SPECTRAL_CLASS_PROBABILITY
+from astro_generator.configuration import DEFAULT_SPECTRAL_CLASS_PROBABILITY
 from astro_generator.entities import Star
 from astro_generator.utils.probability import Probability
 

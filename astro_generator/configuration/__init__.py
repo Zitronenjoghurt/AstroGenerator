@@ -1,0 +1,2 @@
+from .solar_system_config import DEFAULT_STAR_COUNT_PROBABILITY
+from .star_config import DEFAULT_SPECTRAL_CLASS_PROBABILITY

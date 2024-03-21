@@ -1,5 +1,5 @@
 from typing import Optional
-from astro_generator.data import DEFAULT_STAR_COUNT_PROBABILITY
+from astro_generator.configuration import DEFAULT_STAR_COUNT_PROBABILITY
 from astro_generator.entities import SolarSystem
 from astro_generator.generators.star_generator import StarGenerator
 from astro_generator.utils.probability import Probability

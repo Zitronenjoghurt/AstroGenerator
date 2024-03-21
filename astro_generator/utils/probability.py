@@ -1,6 +1,6 @@
 import numpy as np
 from typing import Any
-from astro_generator.utils.validator import validate_of_type
+from astro_generator.utils.validator import validate_list_type, validate_of_type
 
 class RandomSelector():
     def select(self) -> Any:
@@ -151,3 +151,54 @@ class Probability():
         for value in selector_values:
             if not isinstance(value, required_type):
                 raise ValueError(f"All values for Probability '{name}' have to be of type {required_type.__name__}")
+            
+class ProbabilityGroup():
+    def __init__(self, probabilities: dict[str, Probability]) -> None:
+        """A class for grouping different Probabilities with the same output scheme.
+
+        Args:
+            probabilities (dict[str, Probability]): A dictionary of available probabilities.
+
+        Raises:
+            ValueError: On invalid input.
+        """
+        self.probabilities = probabilities
+        try:
+            validate_of_type(probabilities, dict, "probabilities")
+            validate_list_type(list(probabilities.keys()), str, "probabilities", "probability keys")
+            validate_list_type(list(probabilities.values()), Probability, "probabilities", "probability values")
+        except Exception as e:
+            raise ValueError(f"An error occured while creating ProbabilityGroup: {e}")
+        
+    def generate(self, key: str) -> Any:
+        """Generates a random value according to the random selector the Probability of the given key was created for.
+
+        Args:
+            key (str): The key of the Probability object that is supposed to be used for generation.
+
+        Returns:
+            Any: A random generated value from the given key. Defaults to None if key does not exist.
+        """
+        if key not in self.probabilities:
+            return None
+        probability: Probability = self.probabilities.get(key) # type: ignore
+        return probability.generate()
+    
+    def validate(self, required_type: type, count: int, name: str) -> None:
+        """Will validate the ProbabilityGroup object for a certain desired output.
+
+        Args:
+            required_type (type): The output type all generated values must have.
+            count (int): The amount of values the generator is supposed to output.
+            name (str): The name of the Probabilities.
+
+        Raises:
+            ValueError: Should one Probability in the ProbabilityGroup not abide by the specified parameters.
+        """
+        current_key = None
+        try:
+            for key, probability in self.probabilities.items():
+                current_key = key
+                probability.validate(required_type=required_type, count=count, name=name)
+        except Exception as e:
+            raise ValueError(f"An error occured in key '{current_key}' while creating ProbabilityGroup: {e}")

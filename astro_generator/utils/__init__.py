@@ -1,1 +1,1 @@
-from .probability import Probability, WeightedSelector
+from .probability import Probability, ProbabilityGroup, WeightedSelector
