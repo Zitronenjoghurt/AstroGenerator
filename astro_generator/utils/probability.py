@@ -64,7 +64,10 @@ class WeightedSelector(RandomSelector):
         Returns:
             Any: The random generated value
         """
-        return np.random.choice(self.values, size=self.select_count, replace=False, p=self.probabilities)
+        value = np.random.choice(self.values, size=self.select_count, replace=False, p=self.probabilities)
+        if self.select_count == 1 and len(value) > 0:
+            return value[0]
+        return value
     
     def get_values(self) -> list:
         """Will return all values this selector can generate.

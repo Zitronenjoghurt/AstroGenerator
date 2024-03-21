@@ -7,12 +7,12 @@ class Star():
     def __init__(
         self,
         spectral_class: SpectralClass,
-        luminosity: Quantity,
-        mass: Quantity,
-        radius: Quantity,
-        age: Quantity,
-        rotation_speed: Quantity,
-        metallicity: Quantity
+        #luminosity: Quantity,
+        #mass: Quantity,
+        #radius: Quantity,
+        #age: Quantity,
+        #rotation_speed: Quantity,
+        #metallicity: Quantity
     ) -> None:
         """A class representing properties of a star
 
@@ -30,19 +30,19 @@ class Star():
         """
         try:
             validate_of_type(spectral_class, SpectralClass, "spectral_class")
-            validate_unit(luminosity, SOLAR_LUMINOSITY, "luminosity", "SOLAR_LUMINOSITY")
-            validate_unit(mass, SOLAR_MASS, "mass", "SOLAR_MASS")
-            validate_unit(radius, SOLAR_RADIUS, "radius", "SOLAR_RADIUS")
-            validate_unit(age, UNIT_REGISTRY.year, "age", "UNIT_REGISTRY.year")
-            validate_unit(rotation_speed, KM_PER_SEC, "rotation_speed", "KM_PER_SEC")
-            validate_unit(metallicity, METALLICITY, "metallicity", "METALLICITY")
+            #validate_unit(luminosity, SOLAR_LUMINOSITY, "luminosity", "SOLAR_LUMINOSITY")
+            #validate_unit(mass, SOLAR_MASS, "mass", "SOLAR_MASS")
+            #validate_unit(radius, SOLAR_RADIUS, "radius", "SOLAR_RADIUS")
+            #validate_unit(age, UNIT_REGISTRY.year, "age", "UNIT_REGISTRY.year")
+            #validate_unit(rotation_speed, KM_PER_SEC, "rotation_speed", "KM_PER_SEC")
+            #validate_unit(metallicity, METALLICITY, "metallicity", "METALLICITY")
         except Exception as e:
             raise ValueError(f"An error occured while initializing star: {e}")
         
         self.spectral_class = spectral_class
-        self.luminosity = luminosity
-        self.mass = mass
-        self.radius = radius
-        self.age = age
-        self.rotation_speed = rotation_speed
-        self.metallicity = metallicity
+        #self.luminosity = luminosity
+        #self.mass = mass
+        #self.radius = radius
+        #self.age = age
+        #self.rotation_speed = rotation_speed
+        #self.metallicity = metallicity
