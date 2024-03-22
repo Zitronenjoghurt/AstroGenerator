@@ -18,6 +18,7 @@ DEFAULT_SPECTRAL_CLASS_PROBABILITY = Probability.create(
     }
 )
 
+# In solar masses
 DEFAULT_MASS_PROBABILITY = ProbabilityGroup(
     {
         "M": MConfig.DEFAULT_MASS_PROBABILITY,
@@ -27,5 +28,18 @@ DEFAULT_MASS_PROBABILITY = ProbabilityGroup(
         "A": AConfig.DEFAULT_MASS_PROBABILITY,
         "B": BConfig.DEFAULT_MASS_PROBABILITY,
         "O": OConfig.DEFAULT_MASS_PROBABILITY
+    }
+)
+
+# Surface temperature in Kelvin
+DEFAULT_TEMPERATURE_PROBABILITY = ProbabilityGroup(
+    {
+        "M": MConfig.DEFAULT_TEMPERATURE_PROBABILITY,
+        "K": KConfig.DEFAULT_TEMPERATURE_PROBABILITY,
+        "G": GConfig.DEFAULT_TEMPERATURE_PROBABILITY,
+        "F": FConfig.DEFAULT_TEMPERATURE_PROBABILITY,
+        "A": AConfig.DEFAULT_TEMPERATURE_PROBABILITY,
+        "B": BConfig.DEFAULT_TEMPERATURE_PROBABILITY,
+        "O": OConfig.DEFAULT_TEMPERATURE_PROBABILITY
     }
 )

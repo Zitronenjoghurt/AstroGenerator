@@ -11,7 +11,8 @@ class Star():
         mass: Quantity,
         lifespan: Quantity,
         age: Quantity,
-        #radius: Quantity,
+        surface_temperature: Quantity,
+        radius: Quantity,
         #rotation_speed: Quantity,
         #metallicity: Quantity
     ) -> None:
@@ -23,6 +24,7 @@ class Star():
             mass (Quantity): Total mass
             lifespan (Quantity): The lifespan of the star
             age (Quantity): How old the star is
+            surface_temperature (Quantity): How hot the star is at its surface
             radius (Quantity): Average radius
             rotation_speed (Quantity): How fast the star is spinning arount its rotational axis
             metallicity (Quantity): Abundance of elements heavier than hydrogen and helium inside the star
@@ -36,7 +38,8 @@ class Star():
             validate_unit(mass, SOLAR_MASS, "mass", "SOLAR_MASS")
             validate_unit(lifespan, UNIT_REGISTRY.year, "lifespan", "UNIT_REGISTRY.year")
             validate_unit(age, UNIT_REGISTRY.year, "age", "UNIT_REGISTRY.year")
-            #validate_unit(radius, SOLAR_RADIUS, "radius", "SOLAR_RADIUS")
+            validate_unit(surface_temperature, UNIT_REGISTRY.kelvin, "surface_temperature", "UNIT_REGISTRY.kelvin")
+            validate_unit(radius, SOLAR_RADIUS, "radius", "SOLAR_RADIUS")
             #validate_unit(rotation_speed, KM_PER_SEC, "rotation_speed", "KM_PER_SEC")
             #validate_unit(metallicity, METALLICITY, "metallicity", "METALLICITY")
         except Exception as e:
@@ -47,6 +50,7 @@ class Star():
         self.mass = mass
         self.lifespan = lifespan
         self.age = age
-        #self.radius = radius
+        self.surface_temperature = surface_temperature
+        self.radius = radius
         #self.rotation_speed = rotation_speed
         #self.metallicity = metallicity
