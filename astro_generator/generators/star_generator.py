@@ -5,8 +5,8 @@ from numbers import Number
 from typing import Optional
 from pint import Quantity
 from astro_generator.constants.spectral_classes import SpectralClass
-from astro_generator.constants.unit_registry import UNIT_REGISTRY, SOLAR_MASS, SOLAR_LUMINOSITY, SOLAR_RADIUS
-from astro_generator.configuration import DEFAULT_SPECTRAL_CLASS_PROBABILITY, DEFAULT_MASS_PROBABILITY, DEFAULT_TEMPERATURE_PROBABILITY
+from astro_generator.constants.unit_registry import UNIT_REGISTRY, SOLAR_MASS, SOLAR_LUMINOSITY, SOLAR_RADIUS, KM_PER_SEC
+from astro_generator.configuration import DEFAULT_SPECTRAL_CLASS_PROBABILITY, DEFAULT_MASS_PROBABILITY, DEFAULT_TEMPERATURE_PROBABILITY, DEFAULT_BASE_ROTATION_SPEED_PROBABILITY
 from astro_generator.entities import Star
 from astro_generator.utils.probability import Probability, ProbabilityGroup
 
@@ -15,16 +15,19 @@ class StarGenerator():
         self,
         spectral_class_probability: Optional[Probability] = None,
         mass_probability: Optional[ProbabilityGroup] = None,
-        surface_temperature_probability: Optional[ProbabilityGroup] = None
+        surface_temperature_probability: Optional[ProbabilityGroup] = None,
+        base_rotation_speed_probability: Optional[ProbabilityGroup] = None
     ) -> None:
         self.spectral_class_probability = spectral_class_probability if isinstance(spectral_class_probability, Probability) else DEFAULT_SPECTRAL_CLASS_PROBABILITY
         self.mass_probability = mass_probability if isinstance(mass_probability, ProbabilityGroup) else DEFAULT_MASS_PROBABILITY
         self.surface_temperature_probability = surface_temperature_probability if isinstance(surface_temperature_probability, ProbabilityGroup) else DEFAULT_TEMPERATURE_PROBABILITY
+        self.base_rotation_speed_probability = base_rotation_speed_probability if isinstance(base_rotation_speed_probability, ProbabilityGroup) else DEFAULT_BASE_ROTATION_SPEED_PROBABILITY
 
         try:
             self.spectral_class_probability.validate(SpectralClass, 1, "spectral_class")
             self.mass_probability.validate(Number, 1, "mass")
             self.surface_temperature_probability.validate(Number, 1, "surface_temperature")
+            self.base_rotation_speed_probability.validate(Number, 1, "base_rotation_speed")
         except Exception as e:
             raise ValueError(f"An error occured while initializing StarGenerator: {e}")
 
@@ -32,6 +35,7 @@ class StarGenerator():
         spectral_class: SpectralClass = self.spectral_class_probability.generate()
         mass = self.mass_probability.generate(spectral_class.value, 0)                               # in solar masses
         surface_temperature = self.surface_temperature_probability.generate(spectral_class.value, 0) # in Kelvin
+        rotation_speed = self.base_rotation_speed_probability.generate(spectral_class.value, 0)      # in Km/s
 
         # http://hyperphysics.phy-astr.gsu.edu/hbase/Astro/startime.html
         luminosity = mass ** 3.5          # mass-luminosity relationship => solar luminosity
@@ -53,5 +57,6 @@ class StarGenerator():
             lifespan = lifespan * UNIT_REGISTRY.year,
             age = age * UNIT_REGISTRY.year,
             surface_temperature = temperature_kelv,
-            radius = radius
+            radius = radius,
+            rotation_speed = rotation_speed * KM_PER_SEC
         )

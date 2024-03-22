@@ -13,7 +13,7 @@ class Star():
         age: Quantity,
         surface_temperature: Quantity,
         radius: Quantity,
-        #rotation_speed: Quantity,
+        rotation_speed: Quantity,
         #metallicity: Quantity
     ) -> None:
         """A class representing properties of a star
@@ -40,7 +40,7 @@ class Star():
             validate_unit(age, UNIT_REGISTRY.year, "age", "UNIT_REGISTRY.year")
             validate_unit(surface_temperature, UNIT_REGISTRY.kelvin, "surface_temperature", "UNIT_REGISTRY.kelvin")
             validate_unit(radius, SOLAR_RADIUS, "radius", "SOLAR_RADIUS")
-            #validate_unit(rotation_speed, KM_PER_SEC, "rotation_speed", "KM_PER_SEC")
+            validate_unit(rotation_speed, KM_PER_SEC, "rotation_speed", "KM_PER_SEC")
             #validate_unit(metallicity, METALLICITY, "metallicity", "METALLICITY")
         except Exception as e:
             raise ValueError(f"An error occured while initializing star: {e}")
@@ -52,5 +52,5 @@ class Star():
         self.age = age
         self.surface_temperature = surface_temperature
         self.radius = radius
-        #self.rotation_speed = rotation_speed
+        self.rotation_speed = rotation_speed
         #self.metallicity = metallicity

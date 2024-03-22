@@ -5,5 +5,9 @@ DEFAULT_MASS_PROBABILITY = Probability.create(
 )
 
 DEFAULT_TEMPERATURE_PROBABILITY = Probability.create(
-    {"min": 3900, "max": 5300}
+    {"min": 3900.0, "max": 5300.0}
+)
+
+DEFAULT_BASE_ROTATION_SPEED_PROBABILITY = Probability.create(
+    {"min": 10.0, "max": 20.0}
 )
